@@ -38,7 +38,7 @@ function changeDisplayEffectRandomSelectedColour(selectedRandomColourId) {
 }
 
 function playColourSound(selectedRandomColourId) {
-  var selectedColourSound = new Audio("sounds/" + selectedRandomColourId + ".mp3");
+  var selectedColourSound = new Audio("/sounds/" + selectedRandomColourId + ".mp3");
   selectedColourSound.play();
 }
 
