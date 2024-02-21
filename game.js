@@ -6,6 +6,7 @@ var tabUserSelectedColour = [];
 var gameStarted = false;
 gameStarter();
 function gameStarter() {
+ 
   if (!gameStarted) {
     gameStarted = true;
     $(document).one("keypress", function () {
@@ -15,6 +16,7 @@ function gameStarter() {
   }
 }
 function initGame() {
+  changeBodyColour();
   initScoreToZero();
   generateAndExtendSequence();
   userSelectingColour();
@@ -57,6 +59,7 @@ function userPlaying(event) {
     }
   } else {
     displayMessage("Game Over, Press Any Key to Restart");
+    wrongChoice();
     resetGame();
   }
 }
@@ -96,7 +99,14 @@ function initScoreToZero() {
   level = 0;
   changeScore();
 }
-
+function wrongChoice() {
+  $("body").css("background-color", "red");
+  var wrongSound = new Audio("/sounds/wrong.mp3");
+  wrongSound.play();
+}
+function changeBodyColour() {
+  $("body").css("background-color", "#011F3F");
+}
 function resetGame() {
   tabSelectedRandomColour = [];
   tabUserSelectedColour = [];
