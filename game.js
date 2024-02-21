@@ -80,7 +80,7 @@ function generateAndExtendSequence() {
           var colorId = tabSelectedRandomColour[i];
           changeDisplayEffectRandomSelectedColour(colorId);
           playColourSound(colorId);
-        }, i * 900);
+        }, i * 800);
       })(i);
     }
     tabUserSelectedColour = [];
