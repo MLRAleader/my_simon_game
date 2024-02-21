@@ -101,7 +101,7 @@ function initScoreToZero() {
 }
 function wrongChoice() {
   $("body").css("background-color", "red");
-  var wrongSound = new Audio("/sounds/wrong.mp3");
+  var wrongSound = new Audio("sounds/wrong.mp3");
   wrongSound.play();
 }
 function changeBodyColour() {
