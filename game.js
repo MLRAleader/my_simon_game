@@ -5,12 +5,8 @@ var tabSelectedRandomColour = [];
 var tabUserSelectedColour = [];
 var gameStarted = false;
 
-gameStarter();
-function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
-}
+// gameStarter();
+
 $(document).ready(function () {
   if (isMobile()) {
     $(document).on("tap", function (event) {
@@ -23,6 +19,11 @@ $(document).ready(function () {
     });
   }
 });
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+}
 function gameStarter() {
   if (!gameStarted) {
     gameStarted = true;
