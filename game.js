@@ -4,17 +4,17 @@ var level = 0;
 var tabSelectedRandomColour = [];
 var tabUserSelectedColour = [];
 var gameStarted = false;
+
 gameStarter();
 attachEvent();
-
 function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
     navigator.userAgent
   );
 }
-function attachEvent() {
+$(document).ready(function () {
   if (isMobile()) {
-    document.addEventListener("touchstart", ()=>{
+    $(document).on("tap", function (event) {
       gameStarted();
     });
   } else {
@@ -23,7 +23,7 @@ function attachEvent() {
       gameStarted = false;
     });
   }
-}
+});
 function gameStarter() {
   if (!gameStarted) {
     gameStarted = true;
