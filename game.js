@@ -1,129 +1,30 @@
-var tabColour = ["green", "red", "yellow", "blue"];
-var tabPossibleUserChoiceColour = $(".btn");
-var level = 0;
-var tabSelectedRandomColour = [];
-var tabUserSelectedColour = [];
-var gameStarted = false;
-
-gameStarter();
-attachEvent();
-function isMobile() {
-  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
-    navigator.userAgent
-  );
-}
-$(document).ready(function () {
-  if (isMobile()) {
-    $(document).on("tap", function (event) {
-      gameStarted();
-    });
-  } else {
-    $(document).one("keypress", function () {
-      initGame();
-      gameStarted = false;
-    });
-  }
-});
-function gameStarter() {
-  if (!gameStarted) {
-    gameStarted = true;
-    $(document).one("keypress", function () {
-      initGame();
-      gameStarted = false;
-    });
-  }
-}
-function initGame() {
-  changeBodyColour();
-  initScoreToZero();
-  generateAndExtendSequence();
-  userSelectingColour();
-}
-function generateRandomColour() {
-  var randomNumber = Math.floor(Math.random() * 4);
-  return tabColour[randomNumber];
-}
-function selectRandomColour(randomColour) {
-  return $("#" + randomColour);
-}
-function changeDisplayEffectRandomSelectedColour(selectedRandomColourId) {
-  $("#" + selectedRandomColourId).addClass("pressed");
-  setTimeout(function () {
-    $("#" + selectedRandomColourId).removeClass("pressed");
-  }, 100);
-}
-function playColourSound(selectedRandomColourId) {
-  var selectedColourSound = new Audio(
-    "sounds/" + selectedRandomColourId + ".mp3"
-  );
-  selectedColourSound.play();
-}
-function userPlaying(event) {
-  var selectedRandomColourId =
-    tabSelectedRandomColour[tabUserSelectedColour.length];
-  var userSelectedColourId = $(event.target).attr("id");
-
-  if (userSelectedColourId === selectedRandomColourId) {
-    tabUserSelectedColour.push(userSelectedColourId);
-    changeDisplayEffectRandomSelectedColour(userSelectedColourId);
-    playColourSound(userSelectedColourId);
-    if (tabUserSelectedColour.length === tabSelectedRandomColour.length) {
-      level++;
-      changeScore();
-      setTimeout(generateAndExtendSequence, 800);
-    }
-  } else {
-    displayMessage("Game Over, Press Any Key to Restart");
-    wrongChoice();
-    resetGame();
-  }
-}
-
-function userSelectingColour() {
-  tabPossibleUserChoiceColour.off("click");
-  tabPossibleUserChoiceColour.on("click", userPlaying);
-}
-
-function generateAndExtendSequence() {
-  var newRandomColour = generateRandomColour();
-  tabSelectedRandomColour.push(newRandomColour);
-  displayMessage("Level " + level);
-  setTimeout(function () {
-    for (var i = 0; i < tabSelectedRandomColour.length; i++) {
-      (function (i) {
-        setTimeout(function () {
-          var colorId = tabSelectedRandomColour[i];
-          changeDisplayEffectRandomSelectedColour(colorId);
-          playColourSound(colorId);
-        }, i * 900);
-      })(i);
-    }
-    tabUserSelectedColour = [];
-  }, 1000);
-}
-
-function displayMessage(message) {
-  $("#level-title").text(message);
-}
-
-function changeScore() {
-  $("#level-title").text("Level " + level);
-}
-
-function initScoreToZero() {
-  level = 0;
-  changeScore();
-}
-function wrongChoice() {
-  $("body").css("background-color", "red");
-  var wrongSound = new Audio("sounds/wrong.mp3");
-  wrongSound.play();
-}
-function changeBodyColour() {
-  $("body").css("background-color", "#011F3F");
-}
-function resetGame() {
-  tabSelectedRandomColour = [];
-  tabUserSelectedColour = [];
-  gameStarter();
-}
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Simon</title>
+  <link rel="stylesheet" href="styles.css">
+  <link href="https://fonts.googleapis.com/css?family=Press+Start+2P" rel="stylesheet">
+</head>
+<body>
+  <h1 id="level-title">Press A Key to Start</h1>
+  <div class="container">
+    <div lass="row">
+      <div type="button" id="green" class="btn green">
+      </div>
+      <div type="button" id="red" class="btn red">
+      </div>
+    </div>
+    <div class="row">
+      <div type="button" id="yellow" class="btn yellow">
+      </div>
+      <div type="button" id="blue" class="btn blue">
+      </div>
+    </div>
+  </div>
+  <!--Adding jQuery-->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-touch-events/2.0.3/jquery.mobile-events.js"></script>
+  <script src="game.js"></script>
+</body>
+</html>
