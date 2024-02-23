@@ -4,20 +4,8 @@ var level = 0;
 var tabSelectedRandomColour = [];
 var tabUserSelectedColour = [];
 var gameStarted = false;
-
-// gameStarter();
-
-$(document).ready(function () {
-  if (isMobile()) {
-    $(document).on("tap", function (event) {
-      gameStarted();
-    });
-  } else {
-    $(document).one("keypress", function () {
-      initGame();
-      gameStarted = false;
-    });
-  }
+document.addEventListener(isMobile() ? 'touchstart' : 'keypress', function(event) {
+  gameStarter()
 });
 function isMobile() {
   return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
