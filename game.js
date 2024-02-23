@@ -5,8 +5,26 @@ var tabSelectedRandomColour = [];
 var tabUserSelectedColour = [];
 var gameStarted = false;
 gameStarter();
+attachEvent();
+
+function isMobile() {
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(
+    navigator.userAgent
+  );
+}
+function attachEvent() {
+  if (isMobile()) {
+    document.addEventListener("touchstart", ()=>{
+      gameStarted();
+    });
+  } else {
+    $(document).one("keypress", function () {
+      initGame();
+      gameStarted = false;
+    });
+  }
+}
 function gameStarter() {
- 
   if (!gameStarted) {
     gameStarted = true;
     $(document).one("keypress", function () {
@@ -20,32 +38,29 @@ function initGame() {
   initScoreToZero();
   generateAndExtendSequence();
   userSelectingColour();
-  
 }
-
 function generateRandomColour() {
   var randomNumber = Math.floor(Math.random() * 4);
   return tabColour[randomNumber];
 }
-
 function selectRandomColour(randomColour) {
   return $("#" + randomColour);
 }
-
 function changeDisplayEffectRandomSelectedColour(selectedRandomColourId) {
   $("#" + selectedRandomColourId).addClass("pressed");
   setTimeout(function () {
     $("#" + selectedRandomColourId).removeClass("pressed");
   }, 100);
 }
-
 function playColourSound(selectedRandomColourId) {
-  var selectedColourSound = new Audio("sounds/" + selectedRandomColourId + ".mp3");
+  var selectedColourSound = new Audio(
+    "sounds/" + selectedRandomColourId + ".mp3"
+  );
   selectedColourSound.play();
 }
-
 function userPlaying(event) {
-  var selectedRandomColourId = tabSelectedRandomColour[tabUserSelectedColour.length];
+  var selectedRandomColourId =
+    tabSelectedRandomColour[tabUserSelectedColour.length];
   var userSelectedColourId = $(event.target).attr("id");
 
   if (userSelectedColourId === selectedRandomColourId) {
@@ -65,7 +80,7 @@ function userPlaying(event) {
 }
 
 function userSelectingColour() {
-  tabPossibleUserChoiceColour.off("click"); 
+  tabPossibleUserChoiceColour.off("click");
   tabPossibleUserChoiceColour.on("click", userPlaying);
 }
 
@@ -80,7 +95,7 @@ function generateAndExtendSequence() {
           var colorId = tabSelectedRandomColour[i];
           changeDisplayEffectRandomSelectedColour(colorId);
           playColourSound(colorId);
-        }, i * 800);
+        }, i * 900);
       })(i);
     }
     tabUserSelectedColour = [];
